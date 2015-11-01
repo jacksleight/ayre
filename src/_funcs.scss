@@ -1,0 +1,229 @@
+/* Sizes */
+
+@function ayre-sizes($span: null, $sizes: null) {
+    @if $sizes == null {
+        $sizes: ();
+    }
+    $span:   ayre-span($span);
+    $total:  null;
+    $parsed: ();
+    @for $i from 1 through $ayre-limit {
+        $parsed: map-merge($parsed, ($i: null));
+    }
+    @if $span != null {
+        $total: ayre-span-total($span);
+        @for $i from 1 through $ayre-limit {
+            @if unitless($total) == false or $i % $total == 0 {
+                $parsed: map-merge($parsed, ($i: (null: $span)));
+            }
+        }
+    }
+    @each $range, $selectors in $sizes {
+        $range: ayre-range($range);
+        $min:   ayre-range-min($range);
+        $max:   ayre-range-max($range);
+        @for $i from $min through $max {
+            @if $selectors != null {
+                @if type-of($selectors) != map {
+                    $selectors: (null: $selectors);
+                } @elseif $span != null and map-has-key($parsed, null) == false {
+                    $selectors: map-merge((null: $span), $selectors);
+                }
+            }
+            $parsed: map-merge($parsed, ($i: $selectors));
+        }
+    }
+    @each $size, $selectors in $parsed {
+        @if $selectors == null {
+            $parsed: map-remove($parsed, $size);
+        }
+    }
+    @return $parsed;
+}
+
+/* Points */
+
+@function ayre-points($sizes) {
+    $measures: ();
+    @each $size, $selectors in $sizes {
+        $measure:
+            ($ayre-basis * $size) +
+            (ayre-gutters-x($ayre-gutters) * ($size - 1)) +
+            $ayre-extra;
+        $measures: append($measures, $measure);
+    }
+    $points: ();
+    $i: 1;
+    @each $size, $selectors in $sizes {
+        $min: nth($measures, $i);
+        $max: 0;
+        @if length($measures) > $i {
+            $max: nth($measures, $i + 1) - 1;
+        }
+        $points: map-merge($points, ($size: $min $max));
+        $i: $i + 1;
+    }
+    @return $points;
+}
+
+/* Measure */
+
+@function ayre-measure-min($measure) {
+    $value: nth($measure, 1);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}
+@function ayre-measure-max($measure) {
+    $value: nth($measure, 2);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}
+
+/* Span */
+
+@function ayre-span($span) {
+    @if $span == null {
+        @return null;
+    }
+    $width: 0;
+    $left:  0;
+    $right: 0;
+    $size:  $ayre-limit;
+    $break: false;
+    @for $i from 1 through length($span) {
+        @if $break == false {
+            @if nth($span, $i) == of {
+                $size: nth($span, $i + 1);
+                $break: true;
+            } @elseif $i == 1 {
+                $width: nth($span, $i);
+            } @elseif $i == 2 {
+                $left: nth($span, $i);
+            } @elseif $i == 3 {
+                $right: nth($span, $i);
+            }
+        }
+    }
+    $span: $width $left $right of $size;
+    @return $span;
+}
+@function ayre-span-width($span) {
+    $value: nth($span, 1);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}
+@function ayre-span-left($span) {
+    $value: nth($span, 2);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}
+@function ayre-span-right($span) {
+    $value: nth($span, 3);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}
+@function ayre-span-size($span) {
+    $value: nth($span, 5);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}
+@function ayre-span-total($span) {
+    $value: nth($span, 1) + nth($span, 2) + nth($span, 3);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}
+@function ayre-span-length($span, $size, $length) {
+    @if $length == null {
+        @return null;
+    }
+    @if unitless($length) {
+        $scale:  $ayre-limit / ayre-span-size($span);
+        $length: percentage(1 / ($size / ($length * $scale)));
+    }
+    @return $length;
+}
+@function ayre-span-width-length($span, $size) {
+    $span: ayre-span($span);
+    @return ayre-span-length($span, $size, ayre-span-width($span));
+}
+@function ayre-span-left-length($span, $size) {
+    $span: ayre-span($span);
+    @return ayre-span-length($span, $size, ayre-span-left($span));
+}
+@function ayre-span-right-length($span, $size) {
+    $span: ayre-span($span);
+    @return ayre-span-length($span, $size, ayre-span-right($span));
+}
+
+/* Range */
+
+@function ayre-range($range) {
+    @if $range == null {
+        @return null;
+    }
+    @if length($range) == 1 {
+        $range: append($range, to);
+        $range: append($range, nth($range, 1));
+    } @elseif length($range) == 2 {
+        @if nth($range, 1) == to {
+            $range: join(1, $range)
+        } @elseif nth($range, 2) == to {
+            $range: append($range, $ayre-limit);
+        }
+    }
+    @return $range;
+}
+@function ayre-range-min($range) {
+    $value: nth($range, 1);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}
+@function ayre-range-max($range) {
+    $value: nth($range, 3);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}
+
+/* Gutters */
+
+@function ayre-gutters($gutters) {
+    @if $gutters == null {
+        $gutters: $ayre-gutters;
+    }
+    @if length($gutters) == 1 {
+        $gutters: append($gutters, nth($gutters, 1));
+    }
+    @return $gutters;
+}
+@function ayre-gutters-x($gutters) {
+    $value: nth($gutters, 1);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}
+@function ayre-gutters-y($gutters) {
+    $value: nth($gutters, 2);
+    @if $value == 0 {
+        @return null;
+    }
+    @return $value;
+}

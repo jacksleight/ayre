@@ -1,0 +1,19 @@
+{
+  "name": "ayre",
+  "version": "0.1.0",
+  "description": "Sass powered responsive grid system",
+  "main": "src/_ayre.scss",
+  "keywords": [
+    "sass",
+    "scss",
+    "layout",
+    "grid",
+    "responsive",
+    "rwd"
+  ],
+  "authors": [
+    "Jack Sleight <jacksleight@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "http://ayre.jacksleight.com"
+}

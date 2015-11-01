@@ -1,0 +1,125 @@
+/* Grid */
+
+@mixin ayre-grid($span: null, $sizes: null, $gutters: null, $font-size: 1rem) {
+    @if $gutters == null {
+        $gutters: $ayre-gutters;
+    }
+    @include ayre-container();
+    @include ayre-gutters-container($gutters);
+    > * {
+        @include ayre-item($font-size);
+        @include ayre-gutters-item($gutters);
+        @include ayre-span($span, $sizes);
+    }
+}
+
+/* Container */
+
+@mixin ayre-container() {
+    font-size: 0;
+}
+
+/* Items */
+
+@mixin ayre-item($font-size: 1rem) {
+    font-size: $font-size;
+    width: 100%;
+    vertical-align: top;
+    display: inline-block;
+}
+
+/* Gutters */
+
+@mixin ayre-gutters($gutters) {
+    @include ayre-gutters-container($gutters);
+    > * {
+        @include ayre-gutters-item($gutters);
+    }
+}
+@mixin ayre-gutters-container($gutters) {
+    $gutters: ayre-gutters($gutters);
+    @if ayre-gutters-x($gutters) != null {
+        margin-left: ayre-gutters-x($gutters) * -0.5;
+        margin-right: ayre-gutters-x($gutters) * -0.5;
+    }
+    @if ayre-gutters-y($gutters) != null {
+        margin-bottom: ayre-gutters-y($gutters) * -1;
+    }
+}
+@mixin ayre-gutters-item($gutters) {
+    $gutters: ayre-gutters($gutters);
+    margin: 0;
+    @if ayre-gutters-x($gutters) != null {
+        padding-left: ayre-gutters-x($gutters) * 0.5;
+        padding-right: ayre-gutters-x($gutters) * 0.5;
+    }
+    @if ayre-gutters-y($gutters) != null {
+        margin-bottom: ayre-gutters-y($gutters);
+    }
+}
+
+/* Span */
+
+@mixin ayre-span($span: null, $sizes: null) {
+    $sizes:  ayre-sizes($span, $sizes);
+    $points: ayre-points($sizes);
+    $j: 1;
+    @each $size, $selectors in $sizes {
+        @include ayre-media($size to $size, $points) {
+            @each $selector, $span in $selectors {
+                $span:  ayre-span($span);
+                $width: ayre-span-width-length($span, $size);
+                $left:  ayre-span-left-length($span, $size);
+                $right: ayre-span-right-length($span, $size);
+                @include ayre-selector($selector) {
+                    width: $width;
+                    @if $left != null {
+                        margin-left: $left;
+                    }
+                    @if $right != null {
+                        margin-right: $right;
+                    }
+                }
+            }
+        }
+        $j: $j + 1;
+    }
+}
+
+/* Media */
+
+@mixin ayre-media($range: null, $points: null) {
+    @if $points == null {
+        $points: $ayre-points;
+    }
+    $range: ayre-range($range);
+    $min:   ayre-range-min($range);
+    $max:   ayre-range-max($range);
+    @if $min != null {
+        $min: ayre-measure-min(map-get($points, $min));
+    }
+    @if $max != null {
+        $max: ayre-measure-max(map-get($points, $max));
+    }
+    @if $min != null and $max != null {
+        @media screen and (min-width: $min) and (max-width: $max) { @content; }
+    } @else if $min != null {
+        @media screen and (min-width: $min) { @content; }
+    } @else if $max != null {
+        @media screen and (max-width: $max) { @content; }
+    } @else {
+        @media screen { @content; }
+    }
+}
+
+/* Selector */
+
+@mixin ayre-selector($selector) {
+    @if $selector == null {
+        @content;
+    } @else {
+        &#{$selector} {
+            @content;
+        }
+    }
+}
