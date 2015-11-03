@@ -71,15 +71,17 @@
 
 @mixin ayre-span($span: null, $sizes: null) {
     $sizes:  ayre-sizes($span, $sizes);
-    $points: ayre-points($sizes);
     $j: 1;
-    @each $size, $selectors in $sizes {
-        @include ayre-media($size to $size, $points) {
+    @each $range, $selectors in $sizes {
+
+        @debug $range;
+
+        @include ayre-media($range) {
             @each $selector, $span in $selectors {
                 $span:  ayre-span($span);
-                $width: ayre-span-width-length($span, $size);
-                $left:  ayre-span-left-length($span, $size);
-                $right: ayre-span-right-length($span, $size);
+                $width: ayre-span-width-length($span, $range);
+                $left:  ayre-span-left-length($span, $range);
+                $right: ayre-span-right-length($span, $range);
                 @include ayre-selector($selector) {
                     width: $width;
                     @if $left != null {
@@ -97,18 +99,15 @@
 
 /* Media */
 
-@mixin ayre-media($range: null, $points: null) {
-    @if $points == null {
-        $points: $ayre-points;
-    }
+@mixin ayre-media($range: null) {
     $range: ayre-range($range);
     $min:   ayre-range-min($range);
     $max:   ayre-range-max($range);
     @if $min != null {
-        $min: ayre-measure-min(map-get($points, $min));
+        $min: ayre-measure-min(map-get($ayre-points, $min));
     }
     @if $max != null {
-        $max: ayre-measure-max(map-get($points, $max));
+        $max: ayre-measure-max(map-get($ayre-points, $max));
     }
     @if $min != null and $max != null {
         @media screen and (min-width: $min) and (max-width: $max) { @content; }

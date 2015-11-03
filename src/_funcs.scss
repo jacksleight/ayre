@@ -5,67 +5,64 @@
         $sizes: ();
     }
     $span:   ayre-span($span);
-    $total:  null;
     $parsed: ();
-    @for $i from 1 through $ayre-limit {
-        $parsed: map-merge($parsed, ($i: null));
-    }
     @if $span != null {
         $total: ayre-span-total($span);
         @for $i from 1 through $ayre-limit {
             @if unitless($total) == false or $i % $total == 0 {
-                $parsed: map-merge($parsed, ($i: (null: $span)));
+                $max: $i + ($total - 1);
+                @if $max > $ayre-limit {
+                    $max: 0;
+                }
+                $parsed: map-merge($parsed, ($i to $max: (null: $span)));
             }
         }
     }
     @each $range, $selectors in $sizes {
         $range: ayre-range($range);
-        $min:   ayre-range-min($range);
-        $max:   ayre-range-max($range);
-        @for $i from $min through $max {
-            @if $selectors != null {
-                @if type-of($selectors) != map {
-                    $selectors: (null: $selectors);
-                } @elseif $span != null and map-has-key($parsed, null) == false {
-                    $selectors: map-merge((null: $span), $selectors);
-                }
+        @if $selectors != null {
+            @if type-of($selectors) != map {
+                $selectors: (null: $selectors);
+            } @elseif $span != null and map-has-key($parsed, null) == false {
+                $selectors: map-merge((null: $span), $selectors);
             }
-            $parsed: map-merge($parsed, ($i: $selectors));
         }
+        $parsed: map-merge($parsed, ($range: $selectors));
     }
     @each $size, $selectors in $parsed {
         @if $selectors == null {
             $parsed: map-remove($parsed, $size);
         }
     }
+    
+    // @debug $parsed;
+
     @return $parsed;
 }
 
 /* Points */
 
-@function ayre-points($sizes) {
+@function ayre-points() {
+    $gutters-x: ayre-gutters-x($ayre-gutters);
+    @if $gutters-x == null {
+        $gutters-x: 0;
+    }
     $measures: ();
-    @each $size, $selectors in $sizes {
-        $gutters-x: ayre-gutters-x($ayre-gutters);
-        @if $gutters-x == null {
-            $gutters-x: 0;
-        }
+    @for $i from 1 through $ayre-limit {
         $measure:
-            ($ayre-basis * $size) +
-            ($gutters-x * ($size - 1)) +
+            ($ayre-basis * $i) +
+            ($gutters-x * ($i - 1)) +
             $ayre-extra;
         $measures: append($measures, $measure);
     }
     $points: ();
-    $i: 1;
-    @each $size, $selectors in $sizes {
+    @for $i from 1 through $ayre-limit {
         $min: nth($measures, $i);
         $max: 0;
         @if length($measures) > $i {
             $max: nth($measures, $i + 1) - 1;
         }
-        $points: map-merge($points, ($size: $min $max));
-        $i: $i + 1;
+        $points: map-merge($points, ($i: $min $max));
     }
     @return $points;
 }
@@ -150,27 +147,28 @@
     }
     @return $value;
 }
-@function ayre-span-length($span, $size, $length) {
+@function ayre-span-length($span, $range, $length) {
     @if $length == null {
         @return null;
     }
     @if unitless($length) {
-        $scale:  $ayre-limit / ayre-span-size($span);
-        $length: percentage(1 / ($size / ($length * $scale)));
+        $range-min: ayre-range-min($range);
+        $scale:     $ayre-limit / ayre-span-size($span);
+        $length:    percentage(1 / ($range-min / ($length * $scale)));
     }
     @return $length;
 }
-@function ayre-span-width-length($span, $size) {
+@function ayre-span-width-length($span, $range) {
     $span: ayre-span($span);
-    @return ayre-span-length($span, $size, ayre-span-width($span));
+    @return ayre-span-length($span, $range, ayre-span-width($span));
 }
-@function ayre-span-left-length($span, $size) {
+@function ayre-span-left-length($span, $range) {
     $span: ayre-span($span);
-    @return ayre-span-length($span, $size, ayre-span-left($span));
+    @return ayre-span-length($span, $range, ayre-span-left($span));
 }
-@function ayre-span-right-length($span, $size) {
+@function ayre-span-right-length($span, $range) {
     $span: ayre-span($span);
-    @return ayre-span-length($span, $size, ayre-span-right($span));
+    @return ayre-span-length($span, $range, ayre-span-right($span));
 }
 
 /* Range */
