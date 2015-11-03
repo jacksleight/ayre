@@ -46,9 +46,13 @@
 @function ayre-points($sizes) {
     $measures: ();
     @each $size, $selectors in $sizes {
+        $gutters-x: ayre-gutters-x($ayre-gutters);
+        @if $gutters-x == null {
+            $gutters-x: 0;
+        }
         $measure:
             ($ayre-basis * $size) +
-            (ayre-gutters-x($ayre-gutters) * ($size - 1)) +
+            ($gutters-x * ($size - 1)) +
             $ayre-extra;
         $measures: append($measures, $measure);
     }
