@@ -1,6 +1,12 @@
 /* Grid */
 
-@mixin ayre-grid($span: null, $sizes: null, $gutters: null, $font-size: 1rem) {
+@mixin ayre-grid($span: null, $sizes: null, $gutters: null, $font-size: null) {
+    @if type-of($span) == map {
+        $font-size: $gutters;
+        $gutters: $sizes;
+        $sizes: $span;
+        $span: null;
+    }
     @if $gutters == null {
         $gutters: $ayre-gutters;
     }
@@ -21,7 +27,10 @@
 
 /* Items */
 
-@mixin ayre-item($font-size: 1rem) {
+@mixin ayre-item($font-size: null) {
+    @if $font-size == null {
+        $font-size: 1rem;
+    }
     font-size: $font-size;
     width: 100%;
     vertical-align: top;
