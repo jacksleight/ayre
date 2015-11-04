@@ -1,5 +1,8 @@
 # Ayre
 
+[![Packagist](http://img.shields.io/npm/v/ayre.svg?style=flat-square)](https://www.npmjs.com/package/ayre)
+[![License](http://img.shields.io/npm/l/ayre.svg?style=flat-square)](https://www.npmjs.com/package/ayre)
+
 Sass powered responsive grid system.
 
 ## Documentation & Examples
