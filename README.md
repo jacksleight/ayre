@@ -5,6 +5,8 @@
 
 Sass powered responsive grid system.
 
+**Please Note: This is a very early work in progress, updates may introduce backwards compatibilty breaks. Comments, suggestions, bug reports and contributions are all very welcome.**
+
 ## Documentation & Examples
 
 [http://ayre.jacksleight.com/](http://ayre.jacksleight.com/)
@@ -26,7 +28,7 @@ Include in your Sass file:</p>
 
 ## Browser Support
 
-Any browser with media query support.
+Any browser that supports media queries.
 
 ## Licence
 
