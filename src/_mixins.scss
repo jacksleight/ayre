@@ -79,9 +79,9 @@
         @include ayre-media($range) {
             @each $selector, $span in $selectors {
                 $span:  ayre-span($span);
-                $width: ayre-span-width-length($span, $range);
-                $left:  ayre-span-left-length($span, $range);
-                $right: ayre-span-right-length($span, $range);
+                $width: ayre-span-width-length($range, $span);
+                $left:  ayre-span-left-length($range, $span);
+                $right: ayre-span-right-length($range, $span);
                 @include ayre-selector($selector) {
                     width: $width;
                     @if $left != null {

@@ -141,19 +141,19 @@
     }
     @return $value;
 }
-@function ayre-span-width-length($span, $range) {
+@function ayre-span-width-length($range, $span) {
     $span: ayre-span($span);
-    @return ayre-span-length(nth($span, 1) of nth($span, 5), $range);
+    @return ayre-span-length($range, nth($span, 1) of nth($span, 5));
 }
-@function ayre-span-left-length($span, $range) {
+@function ayre-span-left-length($range, $span) {
     $span: ayre-span($span);
-    @return ayre-span-length(nth($span, 2) of nth($span, 5), $range);
+    @return ayre-span-length($range, nth($span, 2) of nth($span, 5));
 }
-@function ayre-span-right-length($span, $range) {
+@function ayre-span-right-length($range, $span) {
     $span: ayre-span($span);
-    @return ayre-span-length(nth($span, 3) of nth($span, 5), $range);
+    @return ayre-span-length($range, nth($span, 3) of nth($span, 5));
 }
-@function ayre-span-length($span, $range) {
+@function ayre-span-length($range, $span) {
     @if $span == null {
         @return null;
     }
