@@ -17,3 +17,7 @@
 * Option to set default item font size
 * Rename basis variable
 * Refactor span length functions to be more intuitive
+
+### 0.2.2
+
+* Flip span length function arguments
