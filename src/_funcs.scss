@@ -1,12 +1,12 @@
 /* Sizes */
 
-@function ayre-sizes($span: null, $sizes: null) {
+@function ayre-sizes($auto: null, $sizes: null) {
     @if $sizes == null {
         $sizes: ();
     }
     $parsed: ();
-    @if $span != null {
-        $span:  ayre-span($span);
+    @if $auto != null {
+        $span:  ayre-span($auto);
         $total: ayre-span-total($span);
         @for $i from $total * 2 through $ayre-limit {
             @if unitless($total) == false or $i % $total == 0 {

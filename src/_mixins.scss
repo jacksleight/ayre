@@ -69,8 +69,8 @@
 
 /* Span */
 
-@mixin ayre-span($span: null, $sizes: null) {
-    $sizes:  ayre-sizes($span, $sizes);
+@mixin ayre-span($auto: null, $sizes: null) {
+    $sizes:  ayre-sizes($auto, $sizes);
     @each $range, $selectors in $sizes {
         @include ayre-media($range) {
             @each $selector, $span in $selectors {
