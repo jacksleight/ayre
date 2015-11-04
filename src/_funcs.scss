@@ -4,39 +4,29 @@
     @if $sizes == null {
         $sizes: ();
     }
-    $span:   ayre-span($span);
     $parsed: ();
     @if $span != null {
+        $span:  ayre-span($span);
         $total: ayre-span-total($span);
-        @for $i from 1 through $ayre-limit {
+        @for $i from $total * 2 through $ayre-limit {
             @if unitless($total) == false or $i % $total == 0 {
-                $max: $i + ($total - 1);
-                @if $max > $ayre-limit {
-                    $max: 0;
-                }
-                $parsed: map-merge($parsed, ($i to $max: (null: $span)));
+                $parsed: map-merge($parsed, ($i to 0 auto: (null: $span)));
             }
         }
     }
     @each $range, $selectors in $sizes {
         $range: ayre-range($range);
-        @if $selectors != null {
-            @if type-of($selectors) != map {
-                $selectors: (null: $selectors);
-            } @elseif $span != null and map-has-key($parsed, null) == false {
-                $selectors: map-merge((null: $span), $selectors);
-            }
-        }
-        $parsed: map-merge($parsed, ($range: $selectors));
-    }
-    @each $size, $selectors in $parsed {
         @if $selectors == null {
-            $parsed: map-remove($parsed, $size);
+            @if map-has-key($parsed, $range) {
+                $parsed: map-remove($parsed, $range);
+            }
+        } @else {
+            @if type-of($selectors) != map and length($selectors) > 0 {
+                $selectors: (null: $selectors);
+            }
+            $parsed: map-merge($parsed, ($range: $selectors));
         }
     }
-    
-    // @debug $parsed;
-
     @return $parsed;
 }
 
@@ -177,16 +167,23 @@
     @if $range == null {
         @return null;
     }
-    @if length($range) == 1 {
-        $range: append($range, to);
-        $range: append($range, nth($range, 1));
-    } @elseif length($range) == 2 {
-        @if nth($range, 1) == to {
-            $range: join(1, $range)
-        } @elseif nth($range, 2) == to {
-            $range: append($range, $ayre-limit);
+    $min:   1;
+    $max:   0;
+    $type:  user;
+    $break: false;
+    @for $i from 1 through length($range) {
+        @if $break == false {
+            @if nth($range, $i) == user or nth($range, $i) == auto {
+                $type: nth($range, $i);
+                $break: true;
+            } @elseif $i == 1 {
+                $min: nth($range, $i);
+            } @elseif $i == 3 {
+                $max: nth($range, $i);
+            }
         }
     }
+    $range: $min to $max $type;
     @return $range;
 }
 @function ayre-range-min($range) {
