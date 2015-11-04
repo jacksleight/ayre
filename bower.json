@@ -1,6 +1,6 @@
 {
   "name": "ayre",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Sass powered responsive grid system",
   "main": "src/_ayre.scss",
   "keywords": [

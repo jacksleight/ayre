@@ -11,3 +11,9 @@
 * More efficient breakpoint width generation
 * Simpler and cleaner media query output
 * More predictable behaviour when overriding auto spans
+
+### 0.2.1
+
+* Option to set default item font size
+* Rename basis variable
+* Refactor span length functions to be more intuitive
