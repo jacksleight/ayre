@@ -44,7 +44,7 @@
     $measures: ();
     @for $i from 1 through $ayre-limit {
         $measure:
-            ($ayre-basis * $i) +
+            ($ayre-unit * $i) +
             ($gutters-x * ($i - 1)) +
             $ayre-extra;
         $measures: append($measures, $measure);
