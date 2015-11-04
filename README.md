@@ -2,6 +2,29 @@
 
 Sass powered responsive grid system.
 
+## Documentation & Examples
+
+[http://ayre.jacksleight.com/](http://ayre.jacksleight.com/)
+
+## Installation
+
+Install via `npm` or `bower`:</p>
+
+```bash
+npm install ayre --save-dev
+bower install ayre --save-dev
+```
+
+Include in your Sass file:</p>
+
+```scss
+@import "[path]/src/_ayre";
+```
+
+## Browser Support
+
+Any browser with media query support.
+
 ## Licence
 
 The MIT License
