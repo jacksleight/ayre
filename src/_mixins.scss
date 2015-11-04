@@ -1,11 +1,11 @@
 /* Grid */
 
-@mixin ayre-grid($span: null, $sizes: null, $gutters: null, $font-size: null) {
-    @if type-of($span) == map {
+@mixin ayre-grid($auto: null, $sizes: null, $gutters: null, $font-size: null) {
+    @if type-of($auto) == map {
         $font-size: $gutters;
         $gutters: $sizes;
-        $sizes: $span;
-        $span: null;
+        $sizes: $auto;
+        $auto: null;
     }
     @if $gutters == null {
         $gutters: $ayre-gutters;
@@ -15,7 +15,7 @@
     > * {
         @include ayre-item($font-size);
         @include ayre-gutters-item($gutters);
-        @include ayre-span($span, $sizes);
+        @include ayre-span($auto, $sizes);
     }
 }
 
@@ -70,7 +70,11 @@
 /* Span */
 
 @mixin ayre-span($auto: null, $sizes: null) {
-    $sizes:  ayre-sizes($auto, $sizes);
+    @if type-of($auto) == map {
+        $sizes: $auto;
+        $auto: null;
+    }
+    $sizes: ayre-sizes($auto, $sizes);
     @each $range, $selectors in $sizes {
         @include ayre-media($range) {
             @each $selector, $span in $selectors {

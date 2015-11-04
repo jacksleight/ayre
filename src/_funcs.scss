@@ -1,6 +1,10 @@
 /* Sizes */
 
 @function ayre-sizes($auto: null, $sizes: null) {
+    @if type-of($auto) == map {
+        $sizes: $auto;
+        $auto: null;
+    }
     @if $sizes == null {
         $sizes: ();
     }
