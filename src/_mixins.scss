@@ -29,7 +29,7 @@
 
 @mixin ayre-item($font-size: null) {
     @if $font-size == null {
-        $font-size: 1rem;
+        $font-size: $ayre-font-size;
     }
     font-size: $font-size;
     width: 100%;
