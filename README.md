@@ -26,7 +26,7 @@ Include in your Sass file:</p>
 @import "[path]/src/_ayre";
 ```
 
-For accurate measurements it's recommended that you set Sass's unit precision to setting to 8 or higher.
+For accurate measurements it's recommended that you set Sass's unit precision setting to 8 or higher.
 
 ## Browser Support
 
