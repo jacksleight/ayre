@@ -5,7 +5,7 @@
 
 Sass powered responsive grid system.
 
-**Please Note: This is a very early work in progress, updates may introduce backwards compatibilty breaks. Comments, suggestions, bug reports and contributions are all very welcome.**
+**Please Note: This is a work in progress, updates may introduce backwards compatibilty breaks. Comments, suggestions, bug reports and contributions are all very welcome.**
 
 ## Documentation & Examples
 
