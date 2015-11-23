@@ -21,3 +21,7 @@
 ### 0.2.2
 
 * Flip span length function arguments
+
+### 0.2.3
+
+* Allow string length values, eg. 'auto'
