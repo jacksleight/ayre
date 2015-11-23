@@ -25,3 +25,7 @@
 ### 0.2.3
 
 * Allow string length values, eg. 'auto'
+
+### 0.2.4
+
+* I messed up the version numbering
