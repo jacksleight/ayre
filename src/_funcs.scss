@@ -162,7 +162,7 @@
     @if $length == null {
         @return null;
     }
-    @if unitless($length) {
+    @if type-of($length) == number and unitless($length) {
         $range-min: ayre-range-min($range);
         $scale:     $ayre-limit / ayre-span-scale($span);
         $length:    percentage(1 / ($range-min / ($length * $scale)));
