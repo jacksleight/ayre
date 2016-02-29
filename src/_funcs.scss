@@ -87,7 +87,7 @@
     $width: 0;
     $left:  0;
     $right: 0;
-    $scale: $ayre-limit;
+    $scale: 0;
     $break: false;
     @for $i from 1 through length($span) {
         @if $break == false {
@@ -163,9 +163,11 @@
         @return null;
     }
     @if type-of($length) == number and unitless($length) {
-        $range-min: ayre-range-min($range);
-        $scale:     $ayre-limit / ayre-span-scale($span);
-        $length:    percentage(1 / ($range-min / ($length * $scale)));
+        $scale: ayre-span-scale($span);
+        @if $scale == null {
+            $scale: ayre-range-min($range);
+        }
+        $length: percentage($length / $scale);
     }
     @return $length;
 }
