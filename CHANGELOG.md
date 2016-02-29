@@ -29,3 +29,7 @@
 ### 0.2.4
 
 * I messed up the version numbering
+
+### 0.2.5
+
+* Fix length calculations when using scaled values below the max limit
