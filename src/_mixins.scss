@@ -1,8 +1,8 @@
 /* Grid */
 
-@mixin ayre-grid($auto: null, $sizes: null, $gutters: null, $font-size: null) {
+@mixin ayre-grid($auto: null, $sizes: null, $gutters: null, $font-family: null) {
     @if type-of($auto) == map {
-        $font-size: $gutters;
+        $font-family: $gutters;
         $gutters: $sizes;
         $sizes: $auto;
         $auto: null;
@@ -13,7 +13,7 @@
     @include ayre-container();
     @include ayre-gutters-container($gutters);
     > * {
-        @include ayre-item($font-size);
+        @include ayre-item($font-family);
         @include ayre-gutters-item($gutters);
         @include ayre-span($auto, $sizes);
     }
@@ -22,16 +22,16 @@
 /* Container */
 
 @mixin ayre-container() {
-    font-size: 0;
+    font-family: ayre-no-whitespace;
 }
 
 /* Items */
 
-@mixin ayre-item($font-size: null) {
-    @if $font-size == null {
-        $font-size: $ayre-font-size;
+@mixin ayre-item($font-family: null) {
+    @if $font-family == null {
+        $font-family: $ayre-font-family;
     }
-    font-size: $font-size;
+    font-family: $font-family;
     width: 100%;
     vertical-align: top;
     display: inline-block;
