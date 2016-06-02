@@ -33,3 +33,8 @@
 ### 0.2.5
 
 * Fix length calculations when using scaled values below the max limit
+
+### 0.3.0
+
+* (BREAKING) Whitespace is now removed using a no whitespace font-face rather than setting the font-size to 0, $ayre-font-size has been removed and replaced with $ayre-font-family
+* (BREAKING) Gutters are no longer taken into account when calculating breakpoint sizes
