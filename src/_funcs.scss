@@ -37,15 +37,10 @@
 /* Points */
 
 @function ayre-points() {
-    $gutters-x: ayre-gutters-x($ayre-gutters);
-    @if $gutters-x == null {
-        $gutters-x: 0;
-    }
     $measures: ();
     @for $i from 1 through $ayre-limit {
         $measure:
             ($ayre-unit * $i) +
-            ($gutters-x * ($i - 1)) +
             $ayre-extra;
         $measures: append($measures, $measure);
     }
