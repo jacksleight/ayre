@@ -31,7 +31,11 @@
     @if $font-family == null {
         $font-family: $ayre-font-family;
     }
-    font-family: $font-family;
+    @if mixin-exists(ayre-font-family) {
+        @include ayre-font-family($font-family);
+    } @elseif $font-family != null {
+        font-family: $font-family;
+    }    
     width: 100%;
     vertical-align: top;
     display: inline-block;
