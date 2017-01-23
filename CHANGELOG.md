@@ -39,6 +39,7 @@
 * (BREAKING) Whitespace is now removed using a no whitespace font-face rather than setting the font-size to 0, $ayre-font-size has been removed and replaced with $ayre-font-family
 * (BREAKING) Gutters are no longer taken into account when calculating breakpoint sizes
 
-### 0.3.1
+### 1.0.0
 
 * Add abiltiy to use mixin for font-family reset
+* Add $ayre-pixel variable to set 1 pixel size when using other units
