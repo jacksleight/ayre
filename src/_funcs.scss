@@ -49,7 +49,7 @@
         $min: nth($measures, $i);
         $max: 0;
         @if length($measures) > $i {
-            $max: nth($measures, $i + 1) - 1;
+            $max: nth($measures, $i + 1) - $ayre-pixel;
         }
         $points: map-merge($points, ($i: $min $max));
     }
