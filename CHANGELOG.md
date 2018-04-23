@@ -46,3 +46,7 @@
 ### 1.0.0
 
 * Add $ayre-pixel variable to set 1 pixel size when using other units
+
+### 1.0.1
+
+* Add font-display to no-whitespace font
