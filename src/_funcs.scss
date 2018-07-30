@@ -219,16 +219,8 @@
     @return $gutters;
 }
 @function ayre-gutters-x($gutters) {
-    $value: nth($gutters, 1);
-    @if $value == 0 {
-        @return null;
-    }
-    @return $value;
+    @return nth($gutters, 1);
 }
 @function ayre-gutters-y($gutters) {
-    $value: nth($gutters, 2);
-    @if $value == 0 {
-        @return null;
-    }
-    @return $value;
+    @return nth($gutters, 2);
 }
