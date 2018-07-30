@@ -50,3 +50,7 @@
 ### 1.0.1
 
 * Add font-display to no-whitespace font
+
+### 1.0.2
+
+* Fix overriding gutters to 0
