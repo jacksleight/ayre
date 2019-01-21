@@ -39,9 +39,12 @@
 @function ayre-points() {
     $measures: ();
     @for $i from 1 through $ayre-limit {
-        $measure:
-            ($ayre-unit * $i) +
-            $ayre-extra;
+        $measure: $ayre-unit * $i;
+        @if unit($ayre-extra) == '%' or unit($ayre-extra) == 'vw' {
+            $measure: $measure + strip-unit($measure * ($ayre-extra / 100));
+        } @else {
+            $measure: $measure + $ayre-extra;
+        }
         $measures: append($measures, $measure);
     }
     $points: ();
