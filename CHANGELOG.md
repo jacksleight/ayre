@@ -54,3 +54,7 @@
 ### 1.0.2
 
 * Fix overriding gutters to 0
+
+### 1.0.3
+
+* Support specifying extra as a percentage or vw uint
